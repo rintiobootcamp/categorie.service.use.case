@@ -1,6 +1,5 @@
 package com.bootcamp.services;
 
-import com.bootcamp.commons.ws.models.usecase.AxeUWs;
 import com.bootcamp.entities.Secteur;
 import org.springframework.stereotype.Component;
 

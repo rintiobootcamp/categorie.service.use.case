@@ -2,7 +2,6 @@ package com.bootcamp.services;
 
 import com.bootcamp.client.AxeClient;
 import com.bootcamp.client.ProjetClient;
-import com.bootcamp.commons.ws.models.usecase.AxeUWs;
 import com.bootcamp.entities.Axe;
 import com.bootcamp.entities.Projet;
 import com.bootcamp.entities.Secteur;
@@ -30,12 +29,12 @@ public class ProjetService {
         projetClient = new ProjetClient();
     }
 
-    public List<AxeUWs> getProjectByAxes() throws IOException {
-        Axe[] axes = axeClient.findAll();
-        Projet[] projets = projetClient.findAll();
-
-        List<AxeUWs> axeUWss = AxeHelper.buildAxeUwsObject(axes, projets);
-
-        return axeUWss;
-    }
+//    public List<AxeUWs> getProjectByAxes() throws IOException {
+//        Axe[] axes = axeClient.findAll();
+//        Projet[] projets = projetClient.findAll();
+//
+//        List<AxeUWs> axeUWss = AxeHelper.buildAxeUwsObject(axes, projets);
+//
+//        return axeUWss;
+//    }
 }
