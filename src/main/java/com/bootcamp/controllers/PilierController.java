@@ -37,10 +37,10 @@ public class PilierController {
         return new ResponseEntity<List<PilierWS>>(pilierWSS, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     @ApiVersions({"1.0"})
     @ApiOperation(value = "One pilier", notes = "pilier by id")
-    public ResponseEntity<PilierWS> getPilier(@PathVariable(value="id") int id) throws IOException {
+    public ResponseEntity<PilierWS> getPilier(@PathVariable int id) throws IOException {
         PilierWS pilierWS = pilierService.getPilier(id);
         return new ResponseEntity<PilierWS>(pilierWS, HttpStatus.OK);
     }
