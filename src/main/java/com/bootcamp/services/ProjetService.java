@@ -2,10 +2,13 @@ package com.bootcamp.services;
 
 //import com.bootcamp.client.AxeClient;
 //import com.bootcamp.client.ProjetClient;
+import com.bootcamp.client.ProjetClient;
+import com.bootcamp.commons.ws.usecases.pivotone.ProjetWS;
 import com.bootcamp.entities.Axe;
 import com.bootcamp.entities.Projet;
 import com.bootcamp.entities.Secteur;
 import com.bootcamp.helpers.AxeHelper;
+import com.bootcamp.helpers.ProjetHelper;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -19,22 +22,17 @@ import java.util.List;
 
 @Component
 public class ProjetService {
+    ProjetClient projetClient = new ProjetClient();
+    List<Projet> projets;
 
-//    AxeClient axeClient;
-//    ProjetClient projetClient;
-//
-//    @PostConstruct
-//    public void init(){
-//        axeClient = new AxeClient();
-//        projetClient = new ProjetClient();
-//    }
-
-//    public List<AxeUWs> getProjectByAxes() throws IOException {
-//        Axe[] axes = axeClient.findAll();
-//        Projet[] projets = projetClient.findAll();
-//
-//        List<AxeUWs> axeUWss = AxeHelper.buildAxeUwsObject(axes, projets);
-//
-//        return axeUWss;
-//    }
+    public List<ProjetWS> getAll() throws IOException {
+        projets = projetClient.findAll();
+        List<ProjetWS> result = new ArrayList<>();
+        for (Projet current : projets) {
+            ProjetWS projetWS = new ProjetWS();
+            projetWS = ProjetHelper.buildProjetWsObject(current);
+            result.add(projetWS);
+        }
+            return result;
+    }
 }

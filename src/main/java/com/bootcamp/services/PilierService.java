@@ -3,11 +3,9 @@ package com.bootcamp.services;
 import com.bootcamp.client.PilierClient;
 import com.bootcamp.client.ProjetClient;
 import com.bootcamp.commons.ws.usecases.pivotone.PilierWS;
-import com.bootcamp.commons.ws.usecases.pivotone.ProjetWS;
 import com.bootcamp.entities.Pilier;
 import com.bootcamp.entities.Projet;
 import com.bootcamp.helpers.PilierHelper;
-import com.bootcamp.helpers.ProjetHelper;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -19,6 +17,7 @@ import java.util.List;
  */
 
 @Component
+
 public class PilierService {
 
     PilierClient pilierClient;
@@ -26,7 +25,8 @@ public class PilierService {
 
     @PostConstruct
     public void init(){
-
+        pilierClient = new PilierClient();
+        projetClient = new ProjetClient();
     }
 
     public List<PilierWS> getPiliers() throws IOException {
@@ -37,4 +37,12 @@ public class PilierService {
 
       return pilierWSS;
     }
+
+    public PilierWS getPilier(int idPilier) throws IOException{
+        Pilier pilier= pilierClient.getById(idPilier);
+        List<Projet> projetList = projetClient.findAll();
+        PilierWS result = PilierHelper.buildPilierWsObject(pilier,projetList);
+        return result;
+    }
 }
+
