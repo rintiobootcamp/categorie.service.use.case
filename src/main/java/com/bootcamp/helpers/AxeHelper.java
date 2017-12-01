@@ -2,6 +2,8 @@ package com.bootcamp.helpers;
 
 import com.bootcamp.commons.ws.models.AxeUWs;
 import com.bootcamp.commons.ws.models.ProjetUWs;
+import com.bootcamp.commons.ws.usecases.pivotone.AxeWS;
+import com.bootcamp.commons.ws.usecases.pivotone.SecteurWS;
 import com.bootcamp.entities.Axe;
 import com.bootcamp.entities.Projet;
 import com.bootcamp.entities.Secteur;
@@ -15,43 +17,26 @@ import java.util.List;
  */
 public class AxeHelper {
 
-    public static AxeUWs buildAxeUwsObject(Axe axe, List<Projet> projets) {
-        AxeUWs axeUWs = new AxeUWs();
-        ArrayList<ProjetUWs> projetsUws = new ArrayList<ProjetUWs>();
+    public static AxeWS buildAxewsObject(Axe axe, List<Projet> projets) {
+        AxeWS axeWS = new AxeWS();
 
-        for (Projet projet : projets) {
-            projetsUws.add(ProjetHelpers.buildProjetUWsObject(projet));
+        axeWS.setId(axe.getId());
+        axeWS.setDateCreation(axe.getDateCreation());
+        axeWS.setNom(axe.getNom());
+        axeWS.setDescription(axe.getDescription());
+        axeWS.setDescriptionFocus(axe.getDescriptionFocus());
+        axeWS.setPilierId(axe.getPilier().getId());
+        axeWS.setTitre(axe.getTitre());
+        axeWS.setTitreFocus(axe.getTitreFocus());
+        axeWS.setDateMiseAJour(axe.getDateMiseAJour());
+
+        List<SecteurWS> secteurWSS = new ArrayList<>();
+        for(Secteur secteur: axe.getSecteurs()){
+            SecteurWS secteurWS = SecteurHelper.buildSecteurWsObject(secteur, projets);
+            secteurWSS.add(secteurWS);
         }
 
-        axeUWs.setProjets(projetsUws);
-        axeUWs.setNom(axe.getNom());
-        axeUWs.setTitre(axe.getTitre());
-        axeUWs.setTitreFocus(axe.getTitreFocus());
-        axeUWs.setDescriptionFocus(axe.getDescriptionFocus());
-        axeUWs.setDescription(axe.getDescription());
-        axeUWs.setDateCreation(axe.getDateCreation());
-        axeUWs.setDateMiseAJour(axe.getDateMiseAJour());
-        return axeUWs;
+        return axeWS;
     }
 
-    public static List<Projet> getProjectsOfAxe(Axe axe, Projet[] projets) {
-        //Recuperation des id des secteurs d'un axe
-        List<Integer> secteurs = new ArrayList<Integer>();
-        for (Secteur secteur : axe.getSecteurs()) {
-            secteurs.add(secteur.getId());
-        }
-
-        //Liste de projets a renvoyer
-        List<Projet> projetsByAxe = new ArrayList<Projet>();
-
-        for (int secteur : secteurs) {
-            for (Projet projet : projets) {
-                //Verification : Si un des secteurs contients le projet, on l'ajoute à la liste de retour
-                if (projet.getIdSecteurs().contains(secteur)) {
-                    projetsByAxe.add(projet);
-                }
-            }
-        }
-        return projetsByAxe;
-    }
 }

@@ -1,7 +1,7 @@
 package com.bootcamp.services;
 
-import com.bootcamp.client.AxeClient;
-import com.bootcamp.client.ProjetClient;
+//import com.bootcamp.client.AxeClient;
+//import com.bootcamp.client.ProjetClient;
 import com.bootcamp.entities.Axe;
 import com.bootcamp.entities.Projet;
 import com.bootcamp.entities.Secteur;
@@ -20,14 +20,14 @@ import java.util.List;
 @Component
 public class ProjetService {
 
-    AxeClient axeClient;
-    ProjetClient projetClient;
-
-    @PostConstruct
-    public void init(){
-        axeClient = new AxeClient();
-        projetClient = new ProjetClient();
-    }
+//    AxeClient axeClient;
+//    ProjetClient projetClient;
+//
+//    @PostConstruct
+//    public void init(){
+//        axeClient = new AxeClient();
+//        projetClient = new ProjetClient();
+//    }
 
 //    public List<AxeUWs> getProjectByAxes() throws IOException {
 //        Axe[] axes = axeClient.findAll();
