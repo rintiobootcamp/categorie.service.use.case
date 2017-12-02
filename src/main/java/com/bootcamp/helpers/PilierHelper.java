@@ -17,18 +17,23 @@ import java.util.List;
 
 /**
  *
- * @author Bello
+ * @author Ibrahim
  */
 public class PilierHelper {
 
     public static PilierWS buildPilierWsObject(Pilier pilier, List<Projet> projets) {
         PilierWS pilierWS = new PilierWS();
-
+        pilierWS.setDescription(pilier.getDescription());
+        pilierWS.setDateMiseAJour(pilier.getDateMiseAJour());
+        pilierWS.setDateCreation(pilier.getDateCreation());
+        pilierWS.setNom(pilier.getNom());
+        pilierWS.setId(pilier.getId());
         List<AxeWS> axeWSS = new ArrayList<>();
         for(Axe axe: pilier.getAxes()){
             AxeWS axeWS = AxeHelper.buildAxewsObject(axe, projets, false);
             axeWSS.add(axeWS);
         }
+        pilierWS.setAxes(axeWSS);
         return pilierWS;
     }
 

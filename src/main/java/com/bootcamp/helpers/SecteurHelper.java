@@ -19,8 +19,11 @@ public class SecteurHelper {
 
     public static SecteurWS buildSecteurWsObject(Secteur secteur, List<Projet> projets, Boolean addParent) {
         SecteurWS secteurWS = new SecteurWS();
-
-
+        secteurWS.setId(secteur.getId());
+        secteurWS.setDateMiseAJour(secteur.getDateMiseAJour());
+        secteurWS.setDateCreation(secteur.getDateCreation());
+        secteurWS.setIcone(secteur.getIcone());
+        secteurWS.setNom(secteur.getNom());
         if(addParent)
             secteurWS = addParent(secteur, secteurWS);
 
@@ -51,6 +54,9 @@ public class SecteurHelper {
         map.put("dateMiseAJour", axe.getDateMiseAJour());
         map.put("nom", axe.getNom());
         map.put("description", axe.getDescription());
+        map.put("titre",axe.getTitre());
+        map.put("titreFocus",axe.getTitreFocus());
+        map.put("descriptionFocus",axe.getDescriptionFocus());
 
         HashMap<String, Object> pilierMap = new HashMap<>();
         Pilier pilier = secteur.getAxe().getPilier();
@@ -68,7 +74,7 @@ public class SecteurHelper {
     }
 
 
-    public static List<SecteurWS> buildSecteur(List<Secteur> secteurs, List<Projet> projetList) {
+    public static List<SecteurWS> buildSecteurWSList(List<Secteur> secteurs, List<Projet> projetList) {
         List<SecteurWS> secteurWSS = new ArrayList<>();
         for(Secteur secteur: secteurs){
             SecteurWS secteurWS = buildSecteurWsObject(secteur, projetList, true);

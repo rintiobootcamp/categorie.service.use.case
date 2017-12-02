@@ -12,8 +12,11 @@ public class PhaseHelper {
 
     public static PhaseWS buildPhaseWSObject(Phase phase) {
         PhaseWS phaseWS = new PhaseWS();
-
-
+        phaseWS.setDateFin(phase.getDateFin());
+        phaseWS.setDateDebut(phase.getDateDebut());
+        phaseWS.setNom(phase.getNom());
+        phaseWS.setId(phase.getId());
+        phaseWS.setActif(phase.isActif());
         return phaseWS;
     }
 

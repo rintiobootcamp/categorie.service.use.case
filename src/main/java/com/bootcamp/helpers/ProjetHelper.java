@@ -24,6 +24,19 @@ public class ProjetHelper {
 
     public static ProjetWS buildProjetWsObject(Projet projet) {
         ProjetWS projetws = new ProjetWS();
+        projetws.setId(projet.getId());
+        projetws.setReference(projet.getReference());
+        projetws.setDateFinReel(projet.getDateFinReel());
+        projetws.setNom(projet.getNom());
+        projetws.setDescription(projet.getDescription());
+        projetws.setDateDebutReel(projet.getDateDebutReel());
+        projetws.setDateDebutPrevisionnel(projet.getDateDebutPrevisionnel());
+        projetws.setDateFinPrevisionnel(projet.getDateFinPrevisionnel());
+        projetws.setBudgetPrevisionnel(projet.getBudgetPrevisionnel());
+        projetws.setBudgetReel(projet.getBudgetReel());
+        projetws.setCoutReel(projet.getCoutReel());
+        projetws.setObjectif(projet.getObjectif());
+        projetws.setSecteurId(projet.getIdSecteur());
 
 
 
@@ -32,12 +45,14 @@ public class ProjetHelper {
             RegionWS regionWS = RegionHelper.buildRegionWSObject(region);
             regionWSS.add(regionWS);
         }
+        projetws.setRegions(regionWSS);
 
         List<PhaseWS> phaseWSS = new ArrayList<>();
         for(Phase phase: projet.getPhases()){
             PhaseWS phaseWS = PhaseHelper.buildPhaseWSObject(phase);
             phaseWSS.add(phaseWS);
         }
+        projetws.setPhases(phaseWSS);
 
         return projetws;
     }
