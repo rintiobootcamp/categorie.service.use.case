@@ -12,6 +12,7 @@ import com.bootcamp.entities.Axe;
 import com.bootcamp.entities.Pilier;
 import com.bootcamp.entities.Projet;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ import java.util.List;
  */
 public class PilierHelper {
 
-    public static PilierWS buildPilierWsObject(Pilier pilier, List<Projet> projets) {
+    public static PilierWS buildPilierWsObject(Pilier pilier, List<Projet> projets) throws IOException{
         PilierWS pilierWS = new PilierWS();
         pilierWS.setDescription(pilier.getDescription());
         pilierWS.setDateMiseAJour(pilier.getDateMiseAJour());
@@ -37,7 +38,7 @@ public class PilierHelper {
         return pilierWS;
     }
 
-    public static List<PilierWS> buildProjet(List<Pilier> pilierList, List<Projet> projetList) {
+    public static List<PilierWS> buildProjet(List<Pilier> pilierList, List<Projet> projetList) throws IOException{
         List<PilierWS> pilierWSS = new ArrayList<>();
        for(Pilier pilier: pilierList){
            PilierWS pilierWS = PilierHelper.buildPilierWsObject(pilier, projetList);

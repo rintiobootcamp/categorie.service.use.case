@@ -1,19 +1,15 @@
 package com.bootcamp.services;
 
-//import com.bootcamp.client.AxeClient;
-//import com.bootcamp.client.ProjetClient;
 import com.bootcamp.client.AxeClient;
-import com.bootcamp.client.PilierClient;
 import com.bootcamp.client.ProjetClient;
 import com.bootcamp.commons.ws.usecases.pivotone.AxeWS;
-import com.bootcamp.commons.ws.usecases.pivotone.PilierWS;
 import com.bootcamp.entities.Axe;
 import com.bootcamp.entities.Projet;
 import com.bootcamp.helpers.AxeHelper;
-import java.io.IOException;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.io.IOException;
+
 import java.util.List;
 import javax.annotation.PostConstruct;
 
@@ -44,7 +40,7 @@ public class AxeService {
     public AxeWS getAxe(int axeId) throws IOException{
         Axe axe= axeClient.getById(axeId);
         List<Projet> projetList = projetClient.findAll();
-        AxeWS axeWS = AxeHelper.buildAxewsObject(axe,projetList);
+        AxeWS axeWS = AxeHelper.buildAxewsObject(axe,projetList,false);
         return axeWS;
     }
 

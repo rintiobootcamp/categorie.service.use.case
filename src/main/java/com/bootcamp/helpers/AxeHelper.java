@@ -8,6 +8,7 @@ import com.bootcamp.entities.Pilier;
 import com.bootcamp.entities.Projet;
 import com.bootcamp.entities.Secteur;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ import java.util.List;
  */
 public class AxeHelper {
 
-    public static AxeWS buildAxewsObject(Axe axe, List<Projet> projets, Boolean addParent) {
+    public static AxeWS buildAxewsObject(Axe axe, List<Projet> projets, Boolean addParent) throws IOException{
         AxeWS axeWS = new AxeWS();
 
         axeWS.setId(axe.getId());
@@ -60,7 +61,7 @@ public class AxeHelper {
 
 
 
-    public static List<AxeWS> buildAxes(List<Axe> axes, List<Projet> projetList) {
+    public static List<AxeWS> buildAxes(List<Axe> axes, List<Projet> projetList) throws IOException{
         List<AxeWS> axeWSS = new ArrayList<>();
         for(Axe axe: axes){
             AxeWS axeWS = buildAxewsObject(axe, projetList, true);

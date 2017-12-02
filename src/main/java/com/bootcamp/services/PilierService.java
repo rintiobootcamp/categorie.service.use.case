@@ -17,7 +17,6 @@ import java.util.List;
  */
 
 @Component
-
 public class PilierService {
 
     PilierClient pilierClient;
@@ -25,6 +24,7 @@ public class PilierService {
 
     @PostConstruct
     public void init(){
+
         pilierClient = new PilierClient();
         projetClient = new ProjetClient();
     }

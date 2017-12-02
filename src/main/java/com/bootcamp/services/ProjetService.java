@@ -2,6 +2,7 @@ package com.bootcamp.services;
 
 //import com.bootcamp.client.AxeClient;
 //import com.bootcamp.client.ProjetClient;
+import com.bootcamp.client.PilierClient;
 import com.bootcamp.client.ProjetClient;
 import com.bootcamp.commons.ws.usecases.pivotone.ProjetWS;
 import com.bootcamp.entities.Axe;
@@ -22,11 +23,17 @@ import java.util.List;
 
 @Component
 public class ProjetService {
-    ProjetClient projetClient = new ProjetClient();
-    List<Projet> projets;
+
+    ProjetClient projetClient;
+
+    @PostConstruct
+    public void init(){
+
+        projetClient = new ProjetClient();
+    }
 
     public List<ProjetWS> getAll() throws IOException {
-        projets = projetClient.findAll();
+        List<Projet> projets = projetClient.findAll();
         List<ProjetWS> result = new ArrayList<>();
         for (Projet current : projets) {
             ProjetWS projetWS = new ProjetWS();
@@ -34,5 +41,10 @@ public class ProjetService {
             result.add(projetWS);
         }
             return result;
+    }
+
+    public ProjetWS getProjet(int idProjet) throws IOException{
+       Projet projet= projetClient.getById(idProjet);
+        return ProjetHelper.buildProjetWsObject(projet);
     }
 }

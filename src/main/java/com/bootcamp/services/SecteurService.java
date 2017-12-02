@@ -32,7 +32,7 @@ public class SecteurService {
     public List<SecteurWS> getSecteur() throws IOException {
         List<Secteur> secteurList = secteurClient.findAll();
         List<Projet> projetList = projetClient.findAll();
-        List<SecteurWS> secteurWSS = SecteurHelper.buildSecteur(secteurList, projetList);
+        List<SecteurWS> secteurWSS = SecteurHelper.buildSecteurWSList(secteurList, projetList);
 
         return secteurWSS;
     }
@@ -40,7 +40,7 @@ public class SecteurService {
     public SecteurWS getSecteur(int axeId) throws IOException{
         Secteur secteur= secteurClient.getById(axeId);
         List<Projet> projetList = projetClient.findAll();
-        SecteurWS secteurWS = SecteurHelper.buildSecteurWsObject(secteur,projetList);
+        SecteurWS secteurWS = SecteurHelper.buildSecteurWsObject(secteur,projetList,false);
         return secteurWS;
     }
 }
