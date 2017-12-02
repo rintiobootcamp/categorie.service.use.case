@@ -8,6 +8,7 @@ import com.bootcamp.entities.Pilier;
 import com.bootcamp.entities.Projet;
 import com.bootcamp.entities.Secteur;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,13 +18,17 @@ import java.util.List;
  */
 public class SecteurHelper {
 
-    public static SecteurWS buildSecteurWsObject(Secteur secteur, List<Projet> projets, Boolean addParent) {
+    public static SecteurWS buildSecteurWsObject(Secteur secteur, List<Projet> projets, Boolean addParent, Boolean includeMedia) throws IOException {
         SecteurWS secteurWS = new SecteurWS();
         secteurWS.setId(secteur.getId());
         secteurWS.setDateMiseAJour(secteur.getDateMiseAJour());
         secteurWS.setDateCreation(secteur.getDateCreation());
         secteurWS.setIcone(secteur.getIcone());
         secteurWS.setNom(secteur.getNom());
+
+        if(includeMedia)
+            secteurWS.setMediaWss(MediaHelper.addMedia(secteur.getId(), "secteur"));
+
         if(addParent)
             secteurWS = addParent(secteur, secteurWS);
 
@@ -74,10 +79,10 @@ public class SecteurHelper {
     }
 
 
-    public static List<SecteurWS> buildSecteurWSList(List<Secteur> secteurs, List<Projet> projetList) {
+    public static List<SecteurWS> buildSecteurWSList(List<Secteur> secteurs, List<Projet> projetList) throws IOException {
         List<SecteurWS> secteurWSS = new ArrayList<>();
         for(Secteur secteur: secteurs){
-            SecteurWS secteurWS = buildSecteurWsObject(secteur, projetList, true);
+            SecteurWS secteurWS = buildSecteurWsObject(secteur, projetList, true, true);
             secteurWSS.add(secteurWS);
         }
         return secteurWSS;

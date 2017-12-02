@@ -5,13 +5,17 @@
  */
 package com.bootcamp.helpers;
 
+import com.bootcamp.client.MediaClient;
 import com.bootcamp.commons.ws.usecases.pivotone.AxeWS;
+import com.bootcamp.commons.ws.usecases.pivotone.MediaWs;
 import com.bootcamp.commons.ws.usecases.pivotone.PilierWS;
 import com.bootcamp.commons.ws.usecases.pivotone.ProjetWS;
 import com.bootcamp.entities.Axe;
+import com.bootcamp.entities.Media;
 import com.bootcamp.entities.Pilier;
 import com.bootcamp.entities.Projet;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +25,7 @@ import java.util.List;
  */
 public class PilierHelper {
 
-    public static PilierWS buildPilierWsObject(Pilier pilier, List<Projet> projets) {
+    public static PilierWS buildPilierWsObject(Pilier pilier, List<Projet> projets) throws IOException {
         PilierWS pilierWS = new PilierWS();
         pilierWS.setDescription(pilier.getDescription());
         pilierWS.setDateMiseAJour(pilier.getDateMiseAJour());
@@ -30,14 +34,15 @@ public class PilierHelper {
         pilierWS.setId(pilier.getId());
         List<AxeWS> axeWSS = new ArrayList<>();
         for(Axe axe: pilier.getAxes()){
-            AxeWS axeWS = AxeHelper.buildAxewsObject(axe, projets, false);
+            AxeWS axeWS = AxeHelper.buildAxewsObject(axe, projets, false, false);
             axeWSS.add(axeWS);
         }
         pilierWS.setAxes(axeWSS);
+        pilierWS.setMediaWss(MediaHelper.addMedia(pilier.getId(), "pilier"));
         return pilierWS;
     }
 
-    public static List<PilierWS> buildProjet(List<Pilier> pilierList, List<Projet> projetList) {
+    public static List<PilierWS> buildProjet(List<Pilier> pilierList, List<Projet> projetList) throws IOException {
         List<PilierWS> pilierWSS = new ArrayList<>();
        for(Pilier pilier: pilierList){
            PilierWS pilierWS = PilierHelper.buildPilierWsObject(pilier, projetList);
@@ -45,4 +50,6 @@ public class PilierHelper {
        }
        return pilierWSS;
     }
+
+
 }
