@@ -32,7 +32,6 @@ public class PilierService {
     public List<PilierWS> getPiliers() throws IOException {
       List<Pilier> pilierList = pilierClient.findAll();
       List<Projet> projetList = projetClient.findAll();
-
       List<PilierWS> pilierWSS = PilierHelper.buildProjet(pilierList, projetList);
 
       return pilierWSS;
@@ -41,8 +40,8 @@ public class PilierService {
     public PilierWS getPilier(int idPilier) throws IOException{
         Pilier pilier= pilierClient.getById(idPilier);
         List<Projet> projetList = projetClient.findAll();
-        PilierWS result = PilierHelper.buildPilierWsObject(pilier,projetList);
-        return result;
+        PilierWS pilierWS = PilierHelper.buildPilierWsObject(pilier,projetList);
+        return pilierWS;
     }
 }
 

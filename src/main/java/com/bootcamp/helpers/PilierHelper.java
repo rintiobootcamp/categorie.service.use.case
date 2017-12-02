@@ -5,7 +5,6 @@
  */
 package com.bootcamp.helpers;
 
-import com.bootcamp.commons.ws.models.ProjetUWs;
 import com.bootcamp.commons.ws.usecases.pivotone.AxeWS;
 import com.bootcamp.commons.ws.usecases.pivotone.PilierWS;
 import com.bootcamp.commons.ws.usecases.pivotone.ProjetWS;

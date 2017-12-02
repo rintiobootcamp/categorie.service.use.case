@@ -39,4 +39,14 @@ public class SecteurHelper {
         return selectedProjets;
     }
 
+
+    public static List<SecteurWS> buildSecteur(List<Secteur> secteurs, List<Projet> projetList) {
+        List<SecteurWS> secteurWSS = new ArrayList<>();
+        for(Secteur secteur: secteurs){
+            SecteurWS secteurWS = buildSecteurWsObject(secteur, projetList);
+            secteurWSS.add(secteurWS);
+        }
+        return secteurWSS;
+    }
+
 }

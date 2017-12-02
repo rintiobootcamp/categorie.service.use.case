@@ -2,7 +2,11 @@ package com.bootcamp.services;
 
 //import com.bootcamp.client.AxeClient;
 //import com.bootcamp.client.ProjetClient;
-import com.bootcamp.commons.ws.models.AxeUWs;
+import com.bootcamp.client.AxeClient;
+import com.bootcamp.client.PilierClient;
+import com.bootcamp.client.ProjetClient;
+import com.bootcamp.commons.ws.usecases.pivotone.AxeWS;
+import com.bootcamp.commons.ws.usecases.pivotone.PilierWS;
 import com.bootcamp.entities.Axe;
 import com.bootcamp.entities.Projet;
 import com.bootcamp.helpers.AxeHelper;
@@ -20,32 +24,30 @@ import javax.annotation.PostConstruct;
 @Component
 public class AxeService {
 
-//    AxeClient axeClient;
-//    ProjetClient projetClient;
-//
-//    @PostConstruct
-//    public void init(){
-//        axeClient = new AxeClient();
-//        projetClient = new ProjetClient();
-//    }
+    AxeClient axeClient;
+    ProjetClient projetClient;
 
-    public List<AxeUWs> getProjectByAxes() throws IOException {
-//        Axe[] axes = axeClient.findAll();
-//        Projet[] projets = projetClient.findAll();
-
-        //Liste formater d'axes a renvoyer
-        List<AxeUWs> axesUWs = new ArrayList<AxeUWs>();
-        
-//        for (Axe axe : axes) {
-//            List<Projet> projetsByAxe = new ArrayList<Projet>();
-//            projetsByAxe = AxeHelper.getProjectsOfAxe(axe, projets);
-//
-//            //Formater l'axe actuel
-//            AxeUWs axeUWs = new AxeUWs();
-//            axeUWs = AxeHelper.buildAxeUwsObject(axe, projetsByAxe);
-//            axesUWs.add(axeUWs);
-//        }
-        
-        return new ArrayList<>();
+    @PostConstruct
+    public void init(){
+        axeClient = new AxeClient();
+        projetClient = new ProjetClient();
     }
+
+    public List<AxeWS> getAxes() throws IOException {
+        List<Axe> axeList = axeClient.findAll();
+        List<Projet> projetList = projetClient.findAll();
+        List<AxeWS> axeWSS = AxeHelper.buildAxes(axeList, projetList);
+
+        return axeWSS;
+    }
+
+    public AxeWS getAxe(int axeId) throws IOException{
+        Axe axe= axeClient.getById(axeId);
+        List<Projet> projetList = projetClient.findAll();
+        AxeWS axeWS = AxeHelper.buildAxewsObject(axe,projetList);
+        return axeWS;
+    }
+
+
+
 }
