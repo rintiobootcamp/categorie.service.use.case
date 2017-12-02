@@ -4,10 +4,12 @@ import com.bootcamp.commons.ws.usecases.pivotone.AxeWS;
 import com.bootcamp.commons.ws.usecases.pivotone.ProjetWS;
 import com.bootcamp.commons.ws.usecases.pivotone.SecteurWS;
 import com.bootcamp.entities.Axe;
+import com.bootcamp.entities.Pilier;
 import com.bootcamp.entities.Projet;
 import com.bootcamp.entities.Secteur;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -15,10 +17,12 @@ import java.util.List;
  */
 public class SecteurHelper {
 
-    public static SecteurWS buildSecteurWsObject(Secteur secteur, List<Projet> projets) {
+    public static SecteurWS buildSecteurWsObject(Secteur secteur, List<Projet> projets, Boolean addParent) {
         SecteurWS secteurWS = new SecteurWS();
 
 
+        if(addParent)
+            secteurWS = addParent(secteur, secteurWS);
 
         List<ProjetWS> projetWSS = new ArrayList<>();
         projets = getListProjets(secteur.getId(), projets);
@@ -39,11 +43,35 @@ public class SecteurHelper {
         return selectedProjets;
     }
 
+    public static SecteurWS addParent(Secteur secteur, SecteurWS secteurWS){
+        Axe axe = secteur.getAxe();
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("id", axe.getId());
+        map.put("dateCreation", axe.getDateCreation());
+        map.put("dateMiseAJour", axe.getDateMiseAJour());
+        map.put("nom", axe.getNom());
+        map.put("description", axe.getDescription());
+
+        HashMap<String, Object> pilierMap = new HashMap<>();
+        Pilier pilier = secteur.getAxe().getPilier();
+        pilierMap.put("id", pilier.getId());
+        pilierMap.put("dateCreation", pilier.getDateCreation());
+        pilierMap.put("dateMiseAJour", pilier.getDateMiseAJour());
+        pilierMap.put("nom", pilier.getNom());
+        pilierMap.put("description", pilier.getDescription());
+
+        map.put("pilier", pilierMap);
+
+        secteurWS.setAxe(map);
+
+        return secteurWS;
+    }
+
 
     public static List<SecteurWS> buildSecteur(List<Secteur> secteurs, List<Projet> projetList) {
         List<SecteurWS> secteurWSS = new ArrayList<>();
         for(Secteur secteur: secteurs){
-            SecteurWS secteurWS = buildSecteurWsObject(secteur, projetList);
+            SecteurWS secteurWS = buildSecteurWsObject(secteur, projetList, true);
             secteurWSS.add(secteurWS);
         }
         return secteurWSS;

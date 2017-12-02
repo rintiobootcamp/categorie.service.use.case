@@ -26,7 +26,7 @@ public class PilierHelper {
 
         List<AxeWS> axeWSS = new ArrayList<>();
         for(Axe axe: pilier.getAxes()){
-            AxeWS axeWS = AxeHelper.buildAxewsObject(axe, projets);
+            AxeWS axeWS = AxeHelper.buildAxewsObject(axe, projets, false);
             axeWSS.add(axeWS);
         }
         return pilierWS;
