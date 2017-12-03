@@ -34,6 +34,7 @@ public class SecteurHelper {
             ProjetWS projetWS = ProjetHelper.buildProjetWsObject(projet);
             projetWSS.add(projetWS);
         }
+        secteurWS.setProjets(projetWSS);
         return secteurWS;
     }
 
