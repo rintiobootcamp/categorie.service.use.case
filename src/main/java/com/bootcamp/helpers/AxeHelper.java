@@ -8,7 +8,6 @@ import com.bootcamp.entities.Pilier;
 import com.bootcamp.entities.Projet;
 import com.bootcamp.entities.Secteur;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -19,7 +18,7 @@ import java.util.List;
  */
 public class AxeHelper {
 
-    public static AxeWS buildAxewsObject(Axe axe, List<Projet> projets, Boolean addParent, Boolean includeMedia) throws IOException {
+    public static AxeWS buildAxewsObject(Axe axe, List<Projet> projets, Boolean addParent) {
         AxeWS axeWS = new AxeWS();
 
         axeWS.setId(axe.getId());
@@ -34,12 +33,9 @@ public class AxeHelper {
         if(addParent)
             axeWS = addParent(axe, axeWS);
 
-        if(includeMedia)
-            axeWS.setMediaWss(MediaHelper.addMedia(axe.getId(), "axe"));
-
         List<SecteurWS> secteurWSS = new ArrayList<>();
         for(Secteur secteur: axe.getSecteurs()){
-            SecteurWS secteurWS = SecteurHelper.buildSecteurWsObject(secteur, projets, false, false);
+            SecteurWS secteurWS = SecteurHelper.buildSecteurWsObject(secteur, projets, false);
             secteurWSS.add(secteurWS);
         }
 
@@ -64,10 +60,10 @@ public class AxeHelper {
 
 
 
-    public static List<AxeWS> buildAxes(List<Axe> axes, List<Projet> projetList) throws IOException {
+    public static List<AxeWS> buildAxes(List<Axe> axes, List<Projet> projetList) {
         List<AxeWS> axeWSS = new ArrayList<>();
         for(Axe axe: axes){
-            AxeWS axeWS = buildAxewsObject(axe, projetList, true, true);
+            AxeWS axeWS = buildAxewsObject(axe, projetList, true);
             axeWSS.add(axeWS);
         }
         return axeWSS;
