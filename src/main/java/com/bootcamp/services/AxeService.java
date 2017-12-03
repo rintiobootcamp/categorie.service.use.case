@@ -44,6 +44,4 @@ public class AxeService {
         return axeWS;
     }
 
-
-
 }
