@@ -5,9 +5,10 @@
  */
 package com.bootcamp.helpers;
 
-import com.bootcamp.commons.ws.usecases.pivotone.AxeWS;
-import com.bootcamp.commons.ws.usecases.pivotone.PilierWS;
-import com.bootcamp.commons.ws.usecases.pivotone.ProjetWS;
+import com.bootcamp.clientTest.LikeClient;
+import com.bootcamp.clientTest.NoteClient;
+import com.bootcamp.commons.enums.EntityType;
+import com.bootcamp.commons.ws.usecases.pivotone.*;
 import com.bootcamp.entities.Axe;
 import com.bootcamp.entities.Pilier;
 import com.bootcamp.entities.Projet;
@@ -29,6 +30,8 @@ public class PilierHelper {
         pilierWS.setDateCreation(pilier.getDateCreation());
         pilierWS.setNom(pilier.getNom());
         pilierWS.setId(pilier.getId());
+        pilierWS = setPilierLikes(pilierWS);
+        pilierWS = setProjetNote(pilierWS);
         List<AxeWS> axeWSS = new ArrayList<>();
         for(Axe axe: pilier.getAxes()){
             AxeWS axeWS = AxeHelper.buildAxewsObject(axe, projets, false);
@@ -45,5 +48,18 @@ public class PilierHelper {
            pilierWSS.add(pilierWS);
        }
        return pilierWSS;
+    }
+
+    public static PilierWS setPilierLikes(PilierWS pilierWS){
+
+        LikeWS likeWS = LikeClient.getLike(EntityType.PILIER,pilierWS.getId());
+        pilierWS.setLikeWS(likeWS);
+        return pilierWS;
+    }
+
+    public static PilierWS setProjetNote(PilierWS pilierWS){
+        NoteWS noteWS = NoteClient.getNote(EntityType.PILIER,pilierWS.getId());
+        pilierWS.setNoteWS(noteWS);
+        return pilierWS;
     }
 }
