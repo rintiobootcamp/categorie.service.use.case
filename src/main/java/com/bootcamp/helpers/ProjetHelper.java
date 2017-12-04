@@ -11,6 +11,7 @@ import com.bootcamp.entities.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -37,6 +38,7 @@ public class ProjetHelper {
         projetws.setPhases(PhaseHelper.buildPhaseWsList(projet.getPhases()));
         projetws.setPhaseActuelle(getProjetActualPhase(projet.getPhases()));
         List<RegionWS> regionWSS = new ArrayList<>();
+
         for(Region region: projet.getRegions()){
             RegionWS regionWS = RegionHelper.buildRegionWSObject(region);
             regionWSS.add(regionWS);
@@ -50,7 +52,6 @@ public class ProjetHelper {
         }
         projetws.setPhases(phaseWSS);
         projetws.setSecteurId(projet.getIdSecteur());
-        projetws.setSecteur(getProjetSector(projet.getIdSecteur()));
         return projetws;
     }
 
@@ -63,13 +64,6 @@ public class ProjetHelper {
         return result;
     }
 
-    public static SecteurWS getProjetSector(int idSecteur) throws IOException{
-        SecteurWS result = new SecteurWS();
-        SecteurClient secteurClient = new SecteurClient();
-        Secteur secteur= secteurClient.getById(idSecteur);
-        result = SecteurHelper.buildNoParentSecteurWs(secteur,true);
-        return result;
-    }
 
     public static List<ProjetWS> buildProjetWSList(List<Projet> projets) throws IOException{
         List<ProjetWS> projetWSs = new ArrayList<>();

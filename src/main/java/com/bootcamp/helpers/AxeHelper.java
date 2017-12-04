@@ -39,6 +39,7 @@ public class AxeHelper {
             SecteurWS secteurWS = SecteurHelper.buildSecteurWsObject(secteur, projets, false);
             secteurWSS.add(secteurWS);
         }
+        axeWS.setSecteurs(secteurWSS);
 
         return axeWS;
     }
