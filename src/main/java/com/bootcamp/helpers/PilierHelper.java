@@ -5,8 +5,8 @@
  */
 package com.bootcamp.helpers;
 
-import com.bootcamp.clientTest.LikeClient;
-import com.bootcamp.clientTest.NoteClient;
+import com.bootcamp.client.LikeClient;
+import com.bootcamp.client.NoteClient;
 import com.bootcamp.commons.enums.EntityType;
 import com.bootcamp.commons.ws.usecases.pivotone.*;
 import com.bootcamp.entities.Axe;
@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class PilierHelper {
 
-    public static PilierWS buildPilierWsObject(Pilier pilier, List<Projet> projets) throws IOException{
+    public PilierWS buildPilierWsObject(Pilier pilier, List<Projet> projets) throws IOException{
         PilierWS pilierWS = new PilierWS();
         pilierWS.setDescription(pilier.getDescription());
         pilierWS.setDateMiseAJour(pilier.getDateMiseAJour());
@@ -33,32 +33,35 @@ public class PilierHelper {
         pilierWS = setPilierLikes(pilierWS);
         pilierWS = setProjetNote(pilierWS);
         List<AxeWS> axeWSS = new ArrayList<>();
+        AxeHelper axeHelper = new AxeHelper();
         for(Axe axe: pilier.getAxes()){
-            AxeWS axeWS = AxeHelper.buildAxewsObject(axe, projets, false);
+            
+            AxeWS axeWS = axeHelper.buildAxewsObject(axe, projets, false);
             axeWSS.add(axeWS);
         }
         pilierWS.setAxes(axeWSS);
         return pilierWS;
     }
 
-    public static List<PilierWS> buildProjet(List<Pilier> pilierList, List<Projet> projetList) throws IOException{
+    public List<PilierWS> buildProjet(List<Pilier> pilierList, List<Projet> projetList) throws IOException{
         List<PilierWS> pilierWSS = new ArrayList<>();
        for(Pilier pilier: pilierList){
-           PilierWS pilierWS = PilierHelper.buildPilierWsObject(pilier, projetList);
+           PilierWS pilierWS = this.buildPilierWsObject(pilier, projetList);
            pilierWSS.add(pilierWS);
        }
        return pilierWSS;
     }
 
-    public static PilierWS setPilierLikes(PilierWS pilierWS){
-
-        LikeWS likeWS = LikeClient.getLike(EntityType.PILIER,pilierWS.getId());
+    public PilierWS setPilierLikes(PilierWS pilierWS) throws IOException{
+        LikeClient likeClient = new LikeClient();
+        LikeWS likeWS = likeClient.getClient(EntityType.PILIER.name(),pilierWS.getId());
         pilierWS.setLikeWS(likeWS);
         return pilierWS;
     }
 
-    public static PilierWS setProjetNote(PilierWS pilierWS){
-        NoteWS noteWS = NoteClient.getNote(EntityType.PILIER,pilierWS.getId());
+    public PilierWS setProjetNote(PilierWS pilierWS) throws IOException{
+        NoteClient noteClient = new NoteClient();
+        NoteWS noteWS = noteClient.getNote(EntityType.PILIER.name(),pilierWS.getId());
         pilierWS.setNoteWS(noteWS);
         return pilierWS;
     }

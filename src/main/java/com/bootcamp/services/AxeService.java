@@ -1,6 +1,6 @@
 package com.bootcamp.services;
 
-import com.bootcamp.clientTest.AxeClient;
+import com.bootcamp.client.AxeClient;
 import com.bootcamp.client.ProjetClient;
 import com.bootcamp.commons.ws.usecases.pivotone.AxeWS;
 import com.bootcamp.entities.Axe;
@@ -22,6 +22,7 @@ public class AxeService {
 
     AxeClient axeClient;
     ProjetClient projetClient;
+    AxeHelper axeHelper = new AxeHelper();
 
     @PostConstruct
     public void init(){
@@ -32,7 +33,7 @@ public class AxeService {
     public List<AxeWS> getAxes() throws IOException {
         List<Axe> axeList = axeClient.findAll();
         List<Projet> projetList = projetClient.findAll();
-        List<AxeWS> axeWSS = AxeHelper.buildAxes(axeList, projetList);
+        List<AxeWS> axeWSS = axeHelper.buildAxes(axeList, projetList);
 
         return axeWSS;
     }
@@ -40,7 +41,7 @@ public class AxeService {
     public AxeWS getAxe(int axeId) throws IOException{
         Axe axe= axeClient.getById(axeId);
         List<Projet> projetList = projetClient.findAll();
-        AxeWS axeWS = AxeHelper.buildAxewsObject(axe,projetList,false);
+        AxeWS axeWS = axeHelper.buildAxewsObject(axe,projetList,false);
         return axeWS;
     }
 

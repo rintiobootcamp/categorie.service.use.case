@@ -1,8 +1,8 @@
 package com.bootcamp.helpers;
 
-import com.bootcamp.clientTest.AxeClient;
-import com.bootcamp.clientTest.LikeClient;
-import com.bootcamp.clientTest.NoteClient;
+import com.bootcamp.client.AxeClient;
+import com.bootcamp.client.LikeClient;
+import com.bootcamp.client.NoteClient;
 import com.bootcamp.commons.enums.EntityType;
 import com.bootcamp.commons.ws.usecases.pivotone.*;
 import com.bootcamp.entities.Axe;
@@ -27,7 +27,7 @@ public class AxeHelper {
         likeClient = new LikeClient();
     }
 
-    public static AxeWS buildAxewsObject(Axe axe, List<Projet> projets, Boolean addParent) throws IOException{
+    public AxeWS buildAxewsObject(Axe axe, List<Projet> projets, Boolean addParent) throws IOException{
         AxeWS axeWS = new AxeWS();
 
         axeWS.setId(axe.getId());
@@ -45,8 +45,9 @@ public class AxeHelper {
             axeWS = addParent(axe, axeWS);
 
         List<SecteurWS> secteurWSS = new ArrayList<>();
+        SecteurHelper secteurHelper = new SecteurHelper();
         for(Secteur secteur: axe.getSecteurs()){
-            SecteurWS secteurWS = SecteurHelper.buildSecteurWsObject(secteur, projets, false);
+            SecteurWS secteurWS = secteurHelper.buildSecteurWsObject(secteur, projets, false);
             secteurWSS.add(secteurWS);
         }
         axeWS.setSecteurs(secteurWSS);
@@ -55,7 +56,7 @@ public class AxeHelper {
     }
 
 
-    public static AxeWS addParent(Axe axe, AxeWS axeWS){
+    public AxeWS addParent(Axe axe, AxeWS axeWS){
         Pilier pilier = axe.getPilier();
         HashMap<String, Object> map = new HashMap<>();
         map.put("id", pilier.getId());
@@ -72,7 +73,7 @@ public class AxeHelper {
 
 
 
-    public static List<AxeWS> buildAxes(List<Axe> axes, List<Projet> projetList) throws IOException{
+    public List<AxeWS> buildAxes(List<Axe> axes, List<Projet> projetList) throws IOException{
         List<AxeWS> axeWSS = new ArrayList<>();
         for(Axe axe: axes){
             AxeWS axeWS = buildAxewsObject(axe, projetList, true);
@@ -81,15 +82,14 @@ public class AxeHelper {
         return axeWSS;
     }
 
-    public static AxeWS setAxeLikes(AxeWS axeWS){
-
-        LikeWS likeWS = LikeClient.getLike(EntityType.AXE,axeWS.getId());
+    public AxeWS setAxeLikes(AxeWS axeWS) throws IOException{
+        LikeWS likeWS = likeClient.getClient(EntityType.AXE.name(),axeWS.getId());
         axeWS.setLikeWS(likeWS);
         return axeWS;
     }
 
-    public static AxeWS setAxeNote(AxeWS axeWS){
-        NoteWS noteWS = NoteClient.getNote(EntityType.AXE,axeWS.getId());
+    public AxeWS setAxeNote(AxeWS axeWS) throws IOException{
+        NoteWS noteWS = noteClient.getNote(EntityType.AXE.name(),axeWS.getId());
         axeWS.setNoteWS(noteWS);
         return axeWS;
     }

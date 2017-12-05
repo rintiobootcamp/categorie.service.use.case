@@ -1,7 +1,7 @@
 package com.bootcamp.services;
 
-import com.bootcamp.clientTest.PilierClient;
-import com.bootcamp.clientTest.ProjetClient;
+import com.bootcamp.client.PilierClient;
+import com.bootcamp.client.ProjetClient;
 import com.bootcamp.commons.ws.usecases.pivotone.PilierWS;
 import com.bootcamp.entities.Pilier;
 import com.bootcamp.entities.Projet;
@@ -21,6 +21,7 @@ public class PilierService {
 
     PilierClient pilierClient;
     ProjetClient projetClient;
+    PilierHelper pilierHelper = new PilierHelper();
 
     @PostConstruct
     public void init(){
@@ -32,7 +33,7 @@ public class PilierService {
     public List<PilierWS> getPiliers() throws IOException {
       List<Pilier> pilierList = pilierClient.findAll();
       List<Projet> projetList = projetClient.findAll();
-      List<PilierWS> pilierWSS = PilierHelper.buildProjet(pilierList, projetList);
+      List<PilierWS> pilierWSS = pilierHelper.buildProjet(pilierList, projetList);
 
       return pilierWSS;
     }
@@ -40,7 +41,7 @@ public class PilierService {
     public PilierWS getPilier(int idPilier) throws IOException{
         Pilier pilier= pilierClient.getById(idPilier);
         List<Projet> projetList = projetClient.findAll();
-        PilierWS pilierWS = PilierHelper.buildPilierWsObject(pilier,projetList);
+        PilierWS pilierWS = pilierHelper.buildPilierWsObject(pilier,projetList);
         return pilierWS;
     }
 }

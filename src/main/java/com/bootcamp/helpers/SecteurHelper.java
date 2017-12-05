@@ -1,7 +1,7 @@
 package com.bootcamp.helpers;
 
-import com.bootcamp.clientTest.LikeClient;
-import com.bootcamp.clientTest.NoteClient;
+import com.bootcamp.client.LikeClient;
+import com.bootcamp.client.NoteClient;
 import com.bootcamp.commons.enums.EntityType;
 import com.bootcamp.commons.ws.usecases.pivotone.*;
 import com.bootcamp.entities.Axe;
@@ -26,7 +26,7 @@ public class SecteurHelper {
         noteClient = new NoteClient();
     }
 
-    public static SecteurWS buildSecteurWsObject(Secteur secteur, List<Projet> projets, Boolean addParent) throws IOException {
+    public SecteurWS buildSecteurWsObject(Secteur secteur, List<Projet> projets, Boolean addParent) throws IOException {
         SecteurWS secteurWS = new SecteurWS();
         secteurWS.setId(secteur.getId());
         secteurWS.setDateMiseAJour(secteur.getDateMiseAJour());
@@ -46,7 +46,7 @@ public class SecteurHelper {
         return secteurWS;
     }
 
-    public static SecteurWS buildNoParentSecteurWs(Secteur secteur,Boolean addParent) {
+    public SecteurWS buildNoParentSecteurWs(Secteur secteur,Boolean addParent) {
         SecteurWS secteurWS = new SecteurWS();
         secteurWS.setId(secteur.getId());
         secteurWS.setDateMiseAJour(secteur.getDateMiseAJour());
@@ -58,7 +58,7 @@ public class SecteurHelper {
         return secteurWS;
     }
 
-    private static List<Projet> getListProjets(int secteurId, List<Projet> projets){
+    private List<Projet> getListProjets(int secteurId, List<Projet> projets){
         List<Projet> selectedProjets = new ArrayList<>();
         for(Projet projet: projets){
             if(secteurId == projet.getIdSecteur())
@@ -68,7 +68,7 @@ public class SecteurHelper {
         return selectedProjets;
     }
 
-    public static SecteurWS addParent(Secteur secteur, SecteurWS secteurWS){
+    public SecteurWS addParent(Secteur secteur, SecteurWS secteurWS){
         Axe axe = secteur.getAxe();
         HashMap<String, Object> map = new HashMap<>();
         map.put("id", axe.getId());
@@ -96,7 +96,7 @@ public class SecteurHelper {
     }
 
 
-    public static List<SecteurWS> buildSecteurWSList(List<Secteur> secteurs, List<Projet> projetList) throws IOException{
+    public List<SecteurWS> buildSecteurWSList(List<Secteur> secteurs, List<Projet> projetList) throws IOException{
         List<SecteurWS> secteurWSS = new ArrayList<>();
         for(Secteur secteur: secteurs){
             SecteurWS secteurWS = buildSecteurWsObject(secteur, projetList, true);
@@ -105,15 +105,15 @@ public class SecteurHelper {
         return secteurWSS;
     }
 
-    public static SecteurWS setSecteurLikes(SecteurWS secteurWS){
+    public SecteurWS setSecteurLikes(SecteurWS secteurWS) throws IOException{
 
-        LikeWS likeWS = LikeClient.getLike(EntityType.SECTEUR,secteurWS.getId());
+        LikeWS likeWS = likeClient.getClient(EntityType.SECTEUR.name(),secteurWS.getId());
         secteurWS.setLikeWS(likeWS);
         return secteurWS;
     }
 
-    public static SecteurWS setSecteurNote(SecteurWS secteurWS){
-        NoteWS noteWS = NoteClient.getNote(EntityType.SECTEUR,secteurWS.getId());
+    public SecteurWS setSecteurNote(SecteurWS secteurWS) throws IOException{
+        NoteWS noteWS = noteClient.getNote(EntityType.SECTEUR.name(),secteurWS.getId());
         secteurWS.setNoteWS(noteWS);
         return secteurWS;
     }

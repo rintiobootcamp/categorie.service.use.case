@@ -1,7 +1,7 @@
 package com.bootcamp.services;
 
 import com.bootcamp.client.ProjetClient;
-import com.bootcamp.clientTest.SecteurClient;
+import com.bootcamp.client.SecteurClient;
 import com.bootcamp.commons.ws.usecases.pivotone.SecteurWS;
 import com.bootcamp.entities.Projet;
 import com.bootcamp.entities.Secteur;
@@ -21,6 +21,7 @@ public class SecteurService {
 
     SecteurClient secteurClient;
     ProjetClient projetClient;
+    SecteurHelper secteurHelper = new SecteurHelper();
 
     @PostConstruct
     public void init(){
@@ -31,7 +32,7 @@ public class SecteurService {
     public List<SecteurWS> getSecteur() throws IOException {
         List<Secteur> secteurList = secteurClient.findAll();
         List<Projet> projetList = projetClient.findAll();
-        List<SecteurWS> secteurWSS = SecteurHelper.buildSecteurWSList(secteurList, projetList);
+        List<SecteurWS> secteurWSS = secteurHelper.buildSecteurWSList(secteurList, projetList);
 
         return secteurWSS;
     }
@@ -39,7 +40,7 @@ public class SecteurService {
     public SecteurWS getSecteur(int axeId) throws IOException{
         Secteur secteur= secteurClient.getById(axeId);
         List<Projet> projetList = projetClient.findAll();
-        SecteurWS secteurWS = SecteurHelper.buildSecteurWsObject(secteur,projetList,false);
+        SecteurWS secteurWS = secteurHelper.buildSecteurWsObject(secteur,projetList,false);
         return secteurWS;
     }
 }
