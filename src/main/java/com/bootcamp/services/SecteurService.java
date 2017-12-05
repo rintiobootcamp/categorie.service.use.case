@@ -1,7 +1,7 @@
 package com.bootcamp.services;
 
 import com.bootcamp.client.ProjetClient;
-import com.bootcamp.client.SecteurClient;
+import com.bootcamp.clientTest.SecteurClient;
 import com.bootcamp.commons.ws.usecases.pivotone.SecteurWS;
 import com.bootcamp.entities.Projet;
 import com.bootcamp.entities.Secteur;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

@@ -1,6 +1,6 @@
 package com.bootcamp.services;
 
-import com.bootcamp.client.AxeClient;
+import com.bootcamp.clientTest.AxeClient;
 import com.bootcamp.client.ProjetClient;
 import com.bootcamp.commons.ws.usecases.pivotone.AxeWS;
 import com.bootcamp.entities.Axe;

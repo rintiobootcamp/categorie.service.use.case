@@ -1,8 +1,9 @@
 package com.bootcamp.helpers;
 
-import com.bootcamp.commons.ws.usecases.pivotone.AxeWS;
-import com.bootcamp.commons.ws.usecases.pivotone.ProjetWS;
-import com.bootcamp.commons.ws.usecases.pivotone.SecteurWS;
+import com.bootcamp.clientTest.LikeClient;
+import com.bootcamp.clientTest.NoteClient;
+import com.bootcamp.commons.enums.EntityType;
+import com.bootcamp.commons.ws.usecases.pivotone.*;
 import com.bootcamp.entities.Axe;
 import com.bootcamp.entities.Pilier;
 import com.bootcamp.entities.Projet;
@@ -17,6 +18,13 @@ import java.util.List;
  * Created by darextossa on 11/29/17.
  */
 public class SecteurHelper {
+
+    private LikeClient likeClient;
+    private NoteClient noteClient;
+    public SecteurHelper(){
+        likeClient = new LikeClient();
+        noteClient = new NoteClient();
+    }
 
     public static SecteurWS buildSecteurWsObject(Secteur secteur, List<Projet> projets, Boolean addParent) throws IOException {
         SecteurWS secteurWS = new SecteurWS();
@@ -95,6 +103,19 @@ public class SecteurHelper {
             secteurWSS.add(secteurWS);
         }
         return secteurWSS;
+    }
+
+    public static SecteurWS setSecteurLikes(SecteurWS secteurWS){
+
+        LikeWS likeWS = LikeClient.getLike(EntityType.SECTEUR,secteurWS.getId());
+        secteurWS.setLikeWS(likeWS);
+        return secteurWS;
+    }
+
+    public static SecteurWS setSecteurNote(SecteurWS secteurWS){
+        NoteWS noteWS = NoteClient.getNote(EntityType.SECTEUR,secteurWS.getId());
+        secteurWS.setNoteWS(noteWS);
+        return secteurWS;
     }
 
 }

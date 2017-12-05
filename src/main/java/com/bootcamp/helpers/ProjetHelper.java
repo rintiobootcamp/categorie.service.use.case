@@ -5,13 +5,11 @@
  */
 package com.bootcamp.helpers;
 
-import com.bootcamp.client.SecteurClient;
 import com.bootcamp.commons.ws.usecases.pivotone.*;
 import com.bootcamp.entities.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**

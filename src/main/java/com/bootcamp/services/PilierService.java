@@ -1,7 +1,7 @@
 package com.bootcamp.services;
 
-import com.bootcamp.client.PilierClient;
-import com.bootcamp.client.ProjetClient;
+import com.bootcamp.clientTest.PilierClient;
+import com.bootcamp.clientTest.ProjetClient;
 import com.bootcamp.commons.ws.usecases.pivotone.PilierWS;
 import com.bootcamp.entities.Pilier;
 import com.bootcamp.entities.Projet;
