@@ -47,7 +47,7 @@ public class AxeIntegrationTest {
      *The Base URI of categorie use case service,
      * it can be change with the online URI of this service.
      */
-    private String BASE_URI = "http://165.227.69.188:8082/categorie";
+    private String BASE_URI = "http://165.227.69.188:9090/categorie";
 
     /**
      * The path of the Axe controller, according to this controller implementation
