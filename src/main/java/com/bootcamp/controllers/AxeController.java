@@ -37,7 +37,7 @@ public class AxeController {
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     @ApiVersions({"1.0"})
     @ApiOperation(value = "One pilier", notes = "pilier by id")
-    public ResponseEntity<AxeWS> getPilier(@PathVariable int id) throws IOException {
+    public ResponseEntity<AxeWS> getAxeWSById(@PathVariable int id) throws IOException {
         AxeWS pilierWS = axeService.getAxe(id);
         return new ResponseEntity<AxeWS>(pilierWS, HttpStatus.OK);
     }
